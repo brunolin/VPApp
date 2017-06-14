@@ -40,7 +40,7 @@ public class Util {
             mainObj = new JSONObject(jsonFile);
 
             vendedor = new Vendedor();
-            vendedor.setNome(mainObj.getString("nome_vendedor"));
+            vendedor.setNome(mainObj.getString("nome"));
             vendedor.setEmail(mainObj.getString("email"));
             vendedor.setCidade(mainObj.getString("cidade"));
             vendedor.setEstado(mainObj.getString("estado"));
