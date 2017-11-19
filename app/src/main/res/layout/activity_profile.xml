@@ -12,7 +12,7 @@
         android:fontFamily="sans-serif"
         android:lineSpacingExtra="30sp"
         android:text="VENDAS PLUS"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="30dp"

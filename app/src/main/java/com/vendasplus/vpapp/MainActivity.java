@@ -61,7 +61,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         progressDialog.dismiss();
 
                         if(task.isSuccessful()) {
-                            finish();
+                            //finish();
                             startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         } else {
                             Toast.makeText(MainActivity.this, "Usuário não encontrado...", Toast.LENGTH_SHORT).show();
