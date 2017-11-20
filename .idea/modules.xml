@@ -3,10 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/VPApp.iml" filepath="$PROJECT_DIR$/VPApp.iml" />
-      <module fileurl="file://C:\Users\Brunolin\Documents\workspace\VPApp\VPApp.iml" filepath="C:\Users\Brunolin\Documents\workspace\VPApp\VPApp.iml" />
       <module fileurl="file://C:\Users\Brunolin\Documents\workspace\VPApp\VendasPlusApp.iml" filepath="C:\Users\Brunolin\Documents\workspace\VPApp\VendasPlusApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\Brunolin\Documents\workspace\VPApp\app\app.iml" filepath="C:\Users\Brunolin\Documents\workspace\VPApp\app\app.iml" />
     </modules>
   </component>
 </project>

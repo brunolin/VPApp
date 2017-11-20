@@ -1,4 +1,4 @@
-package com.vendasplus.vpapp;
+package com.vendasplus.vpapp.model;
 
 /**
  * Created by Brunolin on 19/11/2017.

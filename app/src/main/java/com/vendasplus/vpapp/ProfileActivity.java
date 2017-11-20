@@ -4,35 +4,30 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.vendasplus.vpapp.model.MySingleton;
+import com.vendasplus.vpapp.model.Util;
+import com.vendasplus.vpapp.model.Vendedor;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ProfileActivity extends Activity implements View.OnClickListener {
 
+    private int userId;
     private Button logout;
     private TextView userData;
 
@@ -73,7 +68,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         firebaseAuth.signOut();
         finish();
         startActivity(new Intent(this, MainActivity.class));
-    }
+}
 
     public void getDadosVendedor() {
 
@@ -92,8 +87,8 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 @Override
                 public void onResponse(JSONObject response) {
                     Vendedor vendedor  = Util.JSONToVendedor(response.toString());
+                    userId = vendedor.getIdVendedor();
                     editVendedorData(vendedor);
-                    addNota();
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -105,77 +100,20 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         MySingleton.getInstance(this).addToRequestQueue(request);
     }
 
-    public void addNota() {
-
-        String url = "http://vendasplus.com.br/r/vendedor/cadastrarNota";
-        try {
-
-            JSONObject jsonBody = new JSONObject();
-            jsonBody.put("idVenda", "TesteAndroid");
-            jsonBody.put("nomeProduto", "Teste 2");
-            jsonBody.put("idProduto", 76);
-            jsonBody.put("idVendedor", 1);
-            jsonBody.put("idEmpresa", 3);
-            jsonBody.put("data", "2017-11-18T02:00:00.000Z");
-
-            final String requestBody = jsonBody.toString();
-
-            StringRequest request = new StringRequest(Request.Method.POST,
-                url, new Response.Listener<String>() {
-
-                    @Override
-                    public void onResponse(String response) {
-                        notaAdicionada();
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                    }
-            }) {
-
-                @Override
-                public String getBodyContentType() {
-                    return "application/json; charset=utf-8";
-                }
-
-                @Override
-                public byte[] getBody() {
-                    try {
-                        return requestBody == null ? null : requestBody.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
-                        return null;
-                    }
-                }
-
-            };
-
-            MySingleton.getInstance(this).addToRequestQueue(request);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void editVendedorData(Vendedor vendedor){
         progressDialog.dismiss();
-        editUserData(vendedor);
-    }
-
-    public void editUserData(Vendedor vendedor) {
-        String info = "Nome: " + vendedor.getNome();
-        info += "\nEmail: " + vendedor.getEmail();
-        info += "\nCidade: " + vendedor.getCidade();
-        info += "\nEstado: " + vendedor.getEstado();
-        info += "\nTelefone: " + vendedor.getTelefone();
-        info += "\nPontos: " + vendedor.getPontos();
-
+        String info = "Olá " + vendedor.getNome() + "!\nvocê possui " + vendedor.getPontos() + " pontos!";
         userData.setText(info);
+
     }
 
-    public void notaAdicionada() {
-        String userText = userData.getText().toString();
-        userText += "\nNota Adicionada!";
-        userData.setText(userText);
+    public void addNota(View view) {
+        finish();
+        startActivity(new Intent(this, AddNotaActivity.class).putExtra("userId", userId));
+    }
+
+    public void history(View view) {
+        finish();
+        startActivity(new Intent(this, HistoryActivity.class).putExtra("userId", userId));
     }
 }

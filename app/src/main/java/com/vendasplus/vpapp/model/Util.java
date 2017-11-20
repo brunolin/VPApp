@@ -1,4 +1,4 @@
-package com.vendasplus.vpapp;
+package com.vendasplus.vpapp.model;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 /**
  * Created by Brunolin on 07/06/2017.
@@ -40,6 +41,7 @@ public class Util {
             mainObj = new JSONObject(jsonFile);
 
             vendedor = new Vendedor();
+            vendedor.setIdVendedor(mainObj.getInt("idVendedor"));
             vendedor.setNome(mainObj.getString("nome"));
             vendedor.setEmail(mainObj.getString("email"));
             vendedor.setCidade(mainObj.getString("cidade"));
@@ -52,6 +54,34 @@ public class Util {
         }finally {
             return vendedor;
         }
+    }
+
+    public static ArrayList<Vendas> JSONToVendas(String jsonFile) {
+
+        ArrayList<Vendas> vendas = new ArrayList<>();
+        Vendas venda;
+
+        try {
+            JSONArray vendasJson = new JSONArray(jsonFile);
+            JSONObject vendaJson;
+
+            for(int i = 0; i < vendasJson.length(); i++) {
+                venda = new Vendas();
+                vendaJson = vendasJson.getJSONObject(i);
+
+                venda.setIdVenda(vendaJson.getString("idVenda"));
+                venda.setNomeProduto(vendaJson.getString("nomeProduto"));
+                venda.setAprovada(vendaJson.getString("aprovada"));
+
+                vendas.add(venda);
+            }
+
+            return vendas;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
